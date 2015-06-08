@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="MySQL - rankportal@localhost" uuid="62246f02-1cb3-4ab0-91bd-0688471dc8f1">
+      <secret-storage>master_key</secret-storage>
+      <user-name>root</user-name>
+      <schema-pattern>rankportal.*</schema-pattern>
+      <default-schemas>rankportal.*</default-schemas>
+    </data-source>
+  </component>
+</project>
