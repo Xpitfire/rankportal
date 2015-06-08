@@ -1,4 +1,5 @@
 <?php
+
 function escape($string) {	
 	return nl2br(htmlentities($string));
 }

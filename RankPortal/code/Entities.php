@@ -12,28 +12,10 @@ class Entity {
 	}
 }
 
-class Category extends Entity {
-	private $name;
-	
-	public function getName() {
-		return $this->name;
-	}
-	
-	public function __construct($id, $name) {
-		parent::__construct($id);
-		$this->name = $name;
-	}
-}
-
-class Book extends Entity {
-	private $categoryId;
+class Product extends Entity {
 	private $title;
 	private $author;
 	private $price;
-	
-	public function getCategoryId() {
-		return $this->categoryId;
-	}
 	
 	public function getTitle() {
 		return $this->title;
