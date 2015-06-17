@@ -8,13 +8,17 @@ class AuthenticationManager {
 	
 	public static function authenticate($userName, $password) {
 		$user = DataManager::getUserForUserName($userName);
-		if ($user != null && $user->getPasswordHash() == hash('sha1', "$userName|$password")) {
+		if ($user != null && $user->getPasswordHash() == self::calculateHash($userName, $password)) {
 			$_SESSION['user'] = $user->getId();
 			return true;
 		}
 		self::signOut();
 		return false;
 	}
+
+    public static function calculateHash($userName, $password) {
+        return hash('sha1', "$userName|$password");
+    }
 	
 	public static function signOut() {
 		unset($_SESSION['user']);

@@ -9,16 +9,16 @@ $user = AuthenticationManager::getAuthenticatedUser();
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=Cp1252">
-    <title>Rank Portal</title>
+    <title>Rating Portal</title>
     <link rel="stylesheet" href="css/base.css" type="text/css"/>
 </head>
 <body>
     <div class="header">
 
-        <h1>Rank Portal</h1>
+        <h1>Rating Portal</h1>
 
         <?php if ($user == null): ?>
-            <p>Not logged in. [<a href="login.php">Login</a>]</p>
+            <p>Not logged in. [<a href="login.php">Login</a>] or [<a href="signup.php">SignUp</a>]</p>
         <?php else: ?>
             <form method="post" action="<?php action('logout'); ?>">
                 <p>Welcome, <?php echo escape($user->getUserName()); ?></p>

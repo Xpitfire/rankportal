@@ -8,9 +8,9 @@ if (AuthenticationManager::isAuthenticated()) {
 
 ?>
 
-    <h2>Login</h2>
+    <h2>SignUp</h2>
 
-    <form method="POST" action="<?php action('logIn'); ?>">
+    <form method="POST" action="<?php action('signup'); ?>">
         <table>
             <tr>
                 <th>User name:</th>
@@ -21,7 +21,7 @@ if (AuthenticationManager::isAuthenticated()) {
                 <td><input type="password" name="password" /></td>
             </tr>
         </table>
-        <input type="submit" value="login" />
+        <input type="submit" value="register" />
     </form>
 
 <?php
