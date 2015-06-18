@@ -9,7 +9,7 @@ require 'inc/header.php'; ?>
     <h2>List of Products</h2>
 
 <?php if (isset($products) && sizeof($products) > 0) {
-    require 'inc/productlist.php';
+    require 'inc/list.php';
 } else { ?>
     <p>No products found.</p>
 <?php } ?>

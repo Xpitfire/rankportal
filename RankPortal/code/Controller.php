@@ -90,7 +90,7 @@ class Controller {
         redirect('details.php?productId='.rawurlencode($productId));
     }
 
-    protected function action_addComment() {
+    protected function action_addRating() {
         $errors = array();
 
         $productId = isset($_REQUEST['productId']) ? trim($_REQUEST['productId']) : null;
@@ -116,7 +116,96 @@ class Controller {
 
         DataManager::addComment($productId, $userId, $rank, $comment);
 
-        redirect('list.php');
+        redirect('details.php?productId='.rawurlencode($productId));
+    }
+
+    protected function action_addProduct() {
+        $errors = array();
+
+        $productName = isset($_POST['productName']) ? trim($_POST['productName']) : null;
+        if ($productName == null || strlen($productName) == 0) {
+            $errors[] = 'Invalid product name.';
+        }
+
+        $vendor = isset($_POST['vendor']) ? trim($_POST['vendor']) : null;
+        if ($vendor == null || strlen($vendor) == 0) {
+            $errors[] = 'Invalid vendor name.';
+        }
+
+        $userId = isset($_REQUEST['userId']) ? trim($_REQUEST['userId']) : null;
+        if ($userId == null || strlen($userId) == 0 || !ctype_digit($userId)) {
+            $errors[] = 'Invalid user id.';
+        }
+
+        $imagePath = isset($_POST['imagePath']) ? trim($_POST['imagePath']) : null;
+
+        if (count($errors) > 0) {
+            $this->forward($errors);
+        }
+
+        $productId = ($imagePath == null || strlen($imagePath) == 0) ? DataManager::addProduct($productName, $vendor, $userId) :
+            DataManager::addProduct($productName, $vendor, $userId, $imagePath);
+
+        redirect('success.php?productId='.rawurlencode($productId));
+    }
+
+    protected function action_deleteProduct() {
+        $user = AuthenticationManager::getAuthenticatedUser();
+        if ($user == null)
+            $this->forward(array('User not logged in!'));
+
+        $errors = array();
+
+        $productId = isset($_REQUEST['productId']) ? trim($_REQUEST['productId']) : null;
+        if ($productId == null || strlen($productId) == 0 || !ctype_digit($productId)) {
+            $errors[] = 'Invalid product id';
+        }
+
+        if (count($errors) > 0) {
+            $this->forward($errors);
+        }
+
+        $product = DataManager::getProduct($productId);
+
+        if ($product == null || $product->getUserId() != $user->getId()) {
+            $errors[] = 'Authentication error! Cannot delete products from other users!';
+            $this->forward($errors);
+        }
+
+        DataManager::deleteProduct($productId);
+        redirect('products.php');
+    }
+
+    protected function action_deleteRating() {
+        $user = AuthenticationManager::getAuthenticatedUser();
+        if ($user == null)
+            $this->forward(array('User not logged in!'));
+
+        $errors = array();
+
+        $ratingId = isset($_REQUEST['ratingId']) ? trim($_REQUEST['ratingId']) : null;
+        if ($ratingId == null || strlen($ratingId) == 0 || !ctype_digit($ratingId)) {
+            $errors[] = 'Invalid rating id';
+        }
+
+        $productId = isset($_REQUEST['productId']) ? trim($_REQUEST['productId']) : null;
+        if ($productId == null || strlen($productId) == 0 || !ctype_digit($productId)) {
+            $errors[] = 'Invalid product id';
+        }
+
+        if (count($errors) > 0) {
+            $this->forward($errors);
+        }
+
+        $rating = DataManager::getRating($ratingId);
+
+        if ($rating == null || $rating->getUserId() != $user->getId()) {
+            $errors[] = 'Authentication error! Cannot delete rating from other users!';
+            $this->forward($errors);
+        }
+
+        DataManager::deleteRating($ratingId);
+        redirect('details.php?productId='.rawurlencode($productId));
     }
 
 }

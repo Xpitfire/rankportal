@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/bookshop/bookshop.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/sql/create-database.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/sql/drop-data-from-database.sql" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/sql/insert-data-into-database.sql" dialect="MySQL" />

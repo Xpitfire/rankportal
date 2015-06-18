@@ -25,6 +25,7 @@ $ratings = ($productId != null) ? DataManager::getRatings($productId) : null;
             <tr>
                 <th>Date</th>
                 <th>Comment</th>
+                <th>User</th>
                 <th>Rating</th>
             </tr>
 
@@ -33,22 +34,31 @@ $ratings = ($productId != null) ? DataManager::getRatings($productId) : null;
                     <tr>
                         <td><?php echo escape($rating->getCreateDate()); ?></td>
                         <td><?php echo escape($rating->getComment()); ?></td>
+                        <td><?php echo escape(DataManager::getUserForId($rating->getUserId())->getUserName()); ?></td>
                         <td><?php echo escape($rating->getRank()); ?></td>
+                        <td>
+                            <?php if ($user != null && $user->getId() == $rating->getUserId()) { ?>
+                                <form method="POST" action="<?php action('deleteRating', array('productId' => $productId, 'ratingId' => $rating->getId())); ?>">
+                                    <input type="submit" value="Delete" />
+                                </form>
+                            <?php } ?>
+                        </td>
                     </tr>
                 <?php } ?>
             <?php endif; ?>
 
-            <?php if ($user != null): ?>
-                <tr>
-                    <form method="POST" action="<?php action('addComment',
-                        array('productId' => $product->getId(), 'userId' => $user->getId())); ?>">
-                        <td>Type in a comment: <br> <input name="comment" /></td>
-                        <td>Rating: <input name="rank" /></td>
-                        <td><input type="submit" value="Add Comment" /></td>
-                    </form>
-                </tr>
-            <?php endif; ?>
         <?php } ?>
     </table>
+
+<?php if ($user != null && !DataManager::hasSubmittedRating($user->getId(), $productId)): ?>
+    <div>
+        <form method="POST" action="<?php action('addRating',
+            array('productId' => $product->getId(), 'userId' => $user->getId())); ?>">
+            <td>Type in a comment: <br> <input name="comment" /></td>
+            <td>Rating: <input name="rank" /></td>
+            <td><input type="submit" value="Add Comment" /></td>
+        </form>
+    </div>
+<?php endif; ?>
 
 <?php require 'inc/footer.php';

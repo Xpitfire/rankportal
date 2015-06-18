@@ -69,13 +69,15 @@ class Rating extends Entity {
     private $rank;
     private $createDate;
     private $productId;
+    private $userId;
 
-    public function __construct($id, $comment, $rank, $createDate, $productId) {
+    public function __construct($id, $comment, $rank, $createDate, $productId, $userId) {
         parent::__construct($id);
         $this->comment = $comment;
         $this->rank = $rank;
         $this->createDate = $createDate;
         $this->productId = $productId;
+        $this->userId = $userId;
     }
 
     public function getComment() {
@@ -92,6 +94,10 @@ class Rating extends Entity {
 
     public function getProductId() {
         return $this->productId;
+    }
+
+    public function getUserId() {
+        return $this->userId;
     }
 
 }

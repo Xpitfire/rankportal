@@ -116,12 +116,35 @@ class DataManager {
         $conn = self::getConnection();
         $cursor = self::query($conn, "SELECT * FROM ratings WHERE productId = ?;", array("$productId"));
         while ($r = self::fetchObject($cursor))
-            $ratings[] = new Rating($r->id, $r->comment, $r->rank, $r->createDate, $r->productId);
+            $ratings[] = new Rating($r->id, $r->comment, $r->rank, $r->createDate, $r->productId, $r->userId);
 
         self::close($cursor);
         self::closeConnection($conn);
 
         return $ratings;
+    }
+
+    public static function getRating($ratingId) {
+        $rating = null;
+
+        $conn = self::getConnection();
+        $cursor = self::query($conn, "SELECT * FROM ratings WHERE id = ?;", array("$ratingId"));
+        if ($r = self::fetchObject($cursor))
+            $rating = new Rating($r->id, $r->comment, $r->rank, $r->createDate, $r->productId, $r->userId);
+
+        self::close($cursor);
+        self::closeConnection($conn);
+
+        return $rating;
+    }
+
+    public static function deleteRating($ratingId) {
+        $conn = self::getConnection();
+
+        $cursor = self::query($conn, "DELETE FROM ratings WHERE id = ?;", array($ratingId));
+
+        self::close($cursor);
+        self::closeConnection($conn);
     }
 
     public static function addComment($productId, $userId, $rank, $comment) {
@@ -135,5 +158,65 @@ class DataManager {
         self::close($cursor);
         self::closeConnection($conn);
     }
+
+    public static function addProduct($productName, $vendor, $userId, $imagePath = '/img/placeholrder.png') {
+        $conn = self::getConnection();
+
+        $cursor = self::query(
+            $conn,
+            "INSERT INTO products (productName, vendor, imagePath, userId) VALUES (?, ?, ?, ?);",
+            array("$productName", "$vendor", "$imagePath", $userId));
+
+        $productId = self::lastInsertId($conn);
+
+        self::close($cursor);
+        self::closeConnection($conn);
+
+        return $productId;
+    }
+
+    public static function deleteProduct($productId) {
+        $conn = self::getConnection();
+
+        $cursor = self::query($conn, "DELETE FROM products WHERE id = ?;", array($productId));
+
+        self::close($cursor);
+        self::closeConnection($conn);
+    }
+
+    public static function hasSubmittedRating($userId, $productId) {
+        $ratings = array();
+
+        $conn = self::getConnection();
+        $cursor = self::query($conn, "SELECT * FROM ratings WHERE userId = ? AND productId = ?;", array("$userId", "$productId"));
+        if ($r = self::fetchObject($cursor))
+            $ratings[] = new Rating($r->id, $r->comment, $r->rank, $r->createDate, $r->productId, $r->userId);
+
+        self::close($cursor);
+        self::closeConnection($conn);
+
+        return count($ratings) > 0;
+    }
+
+    public static function getProductsForSearchCriteriaWithPaging($productName, $skip, $take) {
+        $conn = self::getConnection();
+
+        $cursor = self::query($conn, "SELECT COUNT(*) AS cnt FROM products WHERE productName LIKE ?;", array("%$productName%"));
+        $totalCount = self::fetchObject($cursor)->cnt;
+        self::close($cursor);
+
+        $products = array();
+        $skip = intval($skip);
+        $take = intval($take);
+        $cursor = self::query($conn, "SELECT * FROM products WHERE productName LIKE ? LIMIT ?, ?;", array("%$productName%", $skip, $take));
+        while ($product = self::fetchObject($cursor))
+            $products[] = new Product($product->id, $product->productName, $product->vendor, $product->imagePath, $product->userId);
+
+        self::close($cursor);
+        self::closeConnection($conn);
+
+        return new PagingResult($products, $skip, $totalCount);
+    }
+
 
 }

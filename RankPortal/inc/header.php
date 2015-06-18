@@ -29,7 +29,7 @@ $user = AuthenticationManager::getAuthenticatedUser();
 
         <div class="navigation">
             <p>
-                <a href="start.php">Home</a> | <a href="list.php">Overview</a> | <a href="search.php">Search</a>
+                <a href="start.php">Home</a> | <a href="products.php">Products</a> | <a href="search.php">Search</a> | <a href="addproduct.php">Add Product</a>
             </p>
         </div>
     </div>
