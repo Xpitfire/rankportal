@@ -159,7 +159,7 @@ class DataManager {
         self::closeConnection($conn);
     }
 
-    public static function addProduct($productName, $vendor, $userId, $imagePath = '/img/placeholrder.png') {
+    public static function addProduct($productName, $vendor, $userId, $imagePath = 'img/placeholder.png') {
         $conn = self::getConnection();
 
         $cursor = self::query(

@@ -33,3 +33,7 @@
 #logout-btn {
     margin-top: 8px; !important;
 }
+
+.thumbnail-img {
+    width: 100px;
+}

@@ -37,7 +37,7 @@ $user = AuthenticationManager::getAuthenticatedUser();
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <?php if ($user == null): ?>
-                                    <p>Not logged in. [<a href="login.php">Login</a>] or [<a href="signup.php">SignUp</a>]</p>
+                                    <h5><a href="login.php">Login</a> or <a href="signup.php">SignUp</a></h5>
                                 <?php else: ?>
                                     <form method="post" action="<?php action('logout'); ?>" role="form">
                                         <button class="btn btn-danger" type="submit" id="logout-btn">Logout</button>

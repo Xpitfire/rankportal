@@ -7,6 +7,7 @@ $user = AuthenticationManager::getAuthenticatedUser();
 
 <table class="table">
     <tr>
+        <th></th>
         <th>Product</th>
         <th>Vendor</th>
         <th>Creator</th>
@@ -23,6 +24,7 @@ $user = AuthenticationManager::getAuthenticatedUser();
         $ratingCnt = 0;
         ?>
         <tr>
+            <td><img class="thumbnail-img" src="<?php echo escape($product->getImagePath()); ?>"></td>
             <td><?php echo escape($product->getProductName()); ?></td>
             <td><?php echo escape($product->getVendor()); ?></td>
             <td><?php echo escape(DataManager::getUserForId($product->getUserId())->getUserName()); ?></td>
