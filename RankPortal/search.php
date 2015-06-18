@@ -14,14 +14,23 @@ $page = isset($productName) ? DataManager::getProductsForSearchCriteriaWithPagin
     <h2>Search</h2>
 
     <form>
-        <table>
-            <tr>
-                <th>Product</th>
-                <td><input name="productName" value="<?php echo htmlentities($productName); ?>" /></td>
-            </tr>
-        </table>
-        <input type="submit" value="search" />
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div id="imaginary_container">
+                    <div class="input-group stylish-input-group">
+                        <input name="productName" type="text" class="form-control"  placeholder="Search Product" value="<?php echo htmlentities($productName); ?>">
+                    <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
+
+
 
 <?php if (isset($page)): ?>
     <h3>Search Result</h3>
@@ -38,6 +47,7 @@ $page = isset($productName) ? DataManager::getProductsForSearchCriteriaWithPagin
         ?>
 
         <p>
+            Page
             <?php
             $p = 0;
             $i = 0;

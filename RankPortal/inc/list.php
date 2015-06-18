@@ -5,13 +5,15 @@ require_once 'code/DataManager.php';
 $user = AuthenticationManager::getAuthenticatedUser();
 ?>
 
-<table>
+<table class="table">
     <tr>
         <th>Product</th>
         <th>Vendor</th>
         <th>Creator</th>
         <th>Entries</th>
         <th>Rating</th>
+        <th></th>
+        <th></th>
     </tr>
 
     <?php foreach ($products as $product) { ?>
@@ -32,20 +34,23 @@ $user = AuthenticationManager::getAuthenticatedUser();
                 ?>
                 <td><?php echo $ratingCnt; ?></td>
                 <td><?php echo $sumRating / $ratingCnt; ?></td>
+            <?php } else { ?>
+                <td></td>
+                <td></td>
             <?php } ?>
-            <td></td>
-            <td></td>
             <td>
                 <form method="POST" action="<?php action('showDetails', array('productId' => $product->getId())); ?>">
-                    <input type="submit" value="Comments" />
+                    <button type="submit" class="btn btn-default">Comments</button>
                 </form>
             </td>
             <?php if ($user != null && $user->getId() == $product->getUserId()) { ?>
                 <td>
-                <form method="POST" action="<?php action('deleteProduct', array('productId' => $product->getId())); ?>">
-                    <input type="submit" value="Delete" />
-                </form>
+                    <form method="POST" action="<?php action('deleteProduct', array('productId' => $product->getId())); ?>">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
                 </td>
+            <?php } else { ?>
+                <td></td>
             <?php } ?>
         </tr>
     <?php } ?>

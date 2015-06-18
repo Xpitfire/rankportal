@@ -1,0 +1,35 @@
+.form-group .required .control-label:after {
+    content: "*";
+    color: red;
+}
+
+.stylish-input-group .input-group-addon {
+    background: white !important;
+}
+.stylish-input-group .form-control {
+    border-right:0;
+    box-shadow:0 0 0;
+    border-color:#ccc;
+}
+.stylish-input-group button {
+    border:0;
+    background:transparent;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    background-color: #337ab7;
+    color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+    background-color: #337ab7;
+    color: #FFFFFF;
+}
+
+.navbar-brand {
+    height: 20px; !important;
+}
+
+#logout-btn {
+    margin-top: 8px; !important;
+}
