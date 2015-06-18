@@ -82,4 +82,58 @@ class DataManager {
         self::closeConnection($conn);
     }
 
+    public static function getProducts() {
+        $products = array();
+
+        $conn = self::getConnection();
+        $cursor = self::query($conn, "SELECT * FROM products;");
+        while ($p = self::fetchObject($cursor))
+            $products[] = new Product($p->id, $p->productName, $p->vendor, $p->imagePath, $p->userId);
+
+        self::close($cursor);
+        self::closeConnection($conn);
+
+        return $products;
+    }
+
+    public static function getProduct($productId) {
+        $product = null;
+
+        $conn = self::getConnection();
+        $cursor = self::query($conn, "SELECT * FROM products WHERE id = ?;", array("$productId"));
+        if ($p = self::fetchObject($cursor))
+            $product = new Product($p->id, $p->productName, $p->vendor, $p->imagePath, $p->userId);
+
+        self::close($cursor);
+        self::closeConnection($conn);
+
+        return $product;
+    }
+
+    public static function getRatings($productId) {
+        $ratings = array();
+
+        $conn = self::getConnection();
+        $cursor = self::query($conn, "SELECT * FROM ratings WHERE productId = ?;", array("$productId"));
+        while ($r = self::fetchObject($cursor))
+            $ratings[] = new Rating($r->id, $r->comment, $r->rank, $r->createDate, $r->productId);
+
+        self::close($cursor);
+        self::closeConnection($conn);
+
+        return $ratings;
+    }
+
+    public static function addComment($productId, $userId, $rank, $comment) {
+        $conn = self::getConnection();
+
+        $cursor = self::query(
+            $conn,
+            "INSERT INTO ratings (comment, rank, productId, userId) VALUES (?, ?, ?, ?);",
+            array("$comment", "$rank", $productId, $userId));
+
+        self::close($cursor);
+        self::closeConnection($conn);
+    }
+
 }
