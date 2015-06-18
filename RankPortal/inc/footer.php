@@ -3,7 +3,10 @@ require_once 'code/Util.php';
 ?>
 
 <?php if (isset($errors) && is_array($errors)): ?>
-        <div class="errors">
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                &times;
+            </button>
             <ul>
                 <?php foreach($errors as $errMsg):?>
                 <li><?php echo escape($errMsg);?>
