@@ -9,8 +9,9 @@ class DataManager {
     // --- Auxiliary Functions
 
     private static function getConnection() {
-        if (!isset(self::$__connection))
+        if (!isset(self::$__connection)) {
             self::$__connection = new PDO('mysql:host=localhost;dbname=rankportal;charset=utf8', 'root', '');
+        }
         return self::$__connection;
     }
 

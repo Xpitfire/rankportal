@@ -1,3 +1,6 @@
+CREATE DATABASE rankportal;
+USE rankportal;
+
 CREATE TABLE IF NOT EXISTS `users` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `userName` VARCHAR(255) NOT NULL,

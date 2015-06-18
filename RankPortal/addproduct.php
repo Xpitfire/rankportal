@@ -19,7 +19,7 @@ $user = AuthenticationManager::getAuthenticatedUser();
             <input name="vendor" class="form-control" id="vend" required="required" />
         </div>
         <div class="form-group">
-            <label class="control-label" for="img">Image Path</label>
+            <label class="control-label" for="img">Image URL Path (optional)</label>
             <input name="imagePath" class="form-control" id="img" />
         </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Add Product</button>

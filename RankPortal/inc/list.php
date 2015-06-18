@@ -35,7 +35,7 @@ $user = AuthenticationManager::getAuthenticatedUser();
                 }
                 ?>
                 <td><?php echo $ratingCnt; ?></td>
-                <td><?php echo $sumRating / $ratingCnt; ?></td>
+                <td><?php echo number_format($sumRating / $ratingCnt, 2, '.', ''); ?></td>
             <?php } else { ?>
                 <td></td>
                 <td></td>
